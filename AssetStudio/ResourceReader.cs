@@ -13,6 +13,8 @@ namespace AssetStudio
 
         public int Size { get => (int)size; }
 
+        public int Offset { get => (int)offset; }
+
         public ResourceReader(string path, SerializedFile assetsFile, long offset, long size)
         {
             needSearch = true;
