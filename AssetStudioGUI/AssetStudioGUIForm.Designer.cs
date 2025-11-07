@@ -1,4 +1,4 @@
-﻿namespace AssetStudioGUI
+namespace AssetStudioGUI
 {
     partial class AssetStudioGUIForm
     {
@@ -34,6 +34,7 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rmTuanjieWaterMarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.extractFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extractFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -171,6 +172,7 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadFileToolStripMenuItem,
             this.loadFolderToolStripMenuItem,
+            this.rmTuanjieWaterMarkToolStripMenuItem,
             this.toolStripMenuItem1,
             this.extractFileToolStripMenuItem,
             this.extractFolderToolStripMenuItem});
@@ -191,6 +193,13 @@
             this.loadFolderToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.loadFolderToolStripMenuItem.Text = "Load folder";
             this.loadFolderToolStripMenuItem.Click += new System.EventHandler(this.loadFolder_Click);
+            // 
+            // rmTuanjieWaterMarkToolStripMenuItem
+            // 
+            this.rmTuanjieWaterMarkToolStripMenuItem.Name = "rmTuanjieWaterMarkToolStripMenuItem";
+            this.rmTuanjieWaterMarkToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.rmTuanjieWaterMarkToolStripMenuItem.Text = "Remove Tuanjie WaterMark";
+            this.rmTuanjieWaterMarkToolStripMenuItem.Click += new System.EventHandler(this.rmWaterMark_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -1152,6 +1161,7 @@
         private System.Windows.Forms.TextBox listSearch;
         private System.Windows.Forms.ToolStripMenuItem loadFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadFolderToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rmTuanjieWaterMarkToolStripMenuItem;
         private System.Windows.Forms.ListView assetListView;
         private System.Windows.Forms.ColumnHeader columnHeaderName;
         private System.Windows.Forms.ColumnHeader columnHeaderSize;
