@@ -193,6 +193,15 @@ namespace AssetStudioGUI
             }
         }
 
+        private async void rmWaterMark_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.InitialDirectory = openDirectoryBackup;
+            if (openFileDialog1.ShowDialog(this) == DialogResult.OK)
+            {
+                await Task.Run(() => assetsManager.RemoveWaterMark(openFileDialog1.FileNames[0]));
+            }
+        }
+
         private async void extractFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog(this) == DialogResult.OK)
@@ -791,7 +800,8 @@ namespace AssetStudioGUI
             {
                 var bitmap = new DirectBitmap(image.ConvertToBytes(), m_Texture2D.m_Width, m_Texture2D.m_Height);
                 image.Dispose();
-                assetItem.InfoText = $"Width: {m_Texture2D.m_Width}\nHeight: {m_Texture2D.m_Height}\nFormat: {m_Texture2D.m_TextureFormat}";
+                assetItem.InfoText = $"FileOffset: {m_Texture2D.image_data.Offset} ContentLen: {m_Texture2D.image_data.Size}  EndOffset: {m_Texture2D.image_data.Offset+m_Texture2D.image_data.Size - 1} \n";
+                assetItem.InfoText += $"Width: {m_Texture2D.m_Width}\nHeight: {m_Texture2D.m_Height}\nFormat: {m_Texture2D.m_TextureFormat}";
                 switch (m_Texture2D.m_TextureSettings.m_FilterMode)
                 {
                     case 0: assetItem.InfoText += "\nFilter Mode: Point "; break;
