@@ -37,6 +37,30 @@ namespace AssetStudio
             Load(toReadFile);
         }
 
+        public void RemoveWaterMark(string path)
+        {
+            var reader = new FileReader(path);
+            if (reader.FileType != FileType.AssetsFile || !path.Contains("tuanjie default resources"))
+            {
+                return;
+            }
+            var bytes = File.ReadAllBytes(path);
+            var assetsFile = new SerializedFile(reader, this);
+            foreach (var objectInfo in assetsFile.m_Objects)
+            {
+                var objectReader = new ObjectReader(assetsFile.reader, assetsFile, objectInfo);
+                if(objectReader.type == ClassIDType.Texture2D)
+                {
+                    var obj = new Texture2D(objectReader);
+                    if (obj.m_Name.Contains("UnityWatermark-") || obj.m_Name.Contains("test-"))
+                    {
+                        Array.Clear(bytes, obj.image_data.Offset, obj.image_data.Size);
+                    }
+                }
+            }
+            File.WriteAllBytes(path + " patch", bytes);
+        }
+        
         private void Load(string[] files)
         {
             foreach (var file in files)
