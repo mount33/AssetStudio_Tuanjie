@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -591,48 +591,59 @@ namespace AssetStudio
                     var m_KeepVertices = reader.ReadBoolean();
                     var m_KeepIndices = reader.ReadBoolean();
 
-
-                    var m_LightmapUseUV1 = reader.ReadInt32();
-                    var m_fileScale = reader.ReadSingle();
-
-                    var NumInputTriangles = reader.ReadUInt32();
-                    var NumInputVertices = reader.ReadUInt32();
-                    var NumInputMeshes = reader.ReadUInt16();
-                    var NumInputTexCoords = reader.ReadUInt16();
-                    var ResourceFlags = reader.ReadUInt32();
-
-                    var RootClusterPage = reader.ReadInt32();
-                    m_IndexBuffer = reader.ReadUInt32Array(RootClusterPage / 4);
-
-                    var ImposterAtlas = reader.ReadInt32();
-                    for (int i = 0; i < ImposterAtlas; i++)
+                    if (version[0] >= 2022 && version[2] > 55) // 团结 >= 1.6.0 Base：Unity 2022.3.61f1
                     {
-                        reader.ReadUInt16();
                     }
-                    var HierarchyNodes = reader.ReadInt32();
-                    for (int i = 0; i < HierarchyNodes; i++)
-                    {
-                        new VGPackedHierarchyNode(reader);
-                    }
-                    var HierarchyRootOffsets = reader.ReadInt32();
-                    for (int i = 0; i < HierarchyRootOffsets; i++)
-                    {
-                        reader.ReadUInt32();
-                    }
-                    var PageStreamingStates = reader.ReadInt32();
-                    for (int i = 0; i < PageStreamingStates; i++)
-                    {
-                        new VGPageStreamingState(reader);
-                    }
-                    var PageDependencies = reader.ReadInt32();
-                    for (int i = 0; i < PageDependencies; i++)
-                    {
-                        reader.ReadUInt32();
+                    else 
+                    { 
+                        var m_LightmapUseUV1 = reader.ReadInt32();
+                        var m_fileScale = reader.ReadSingle();
+
+                        var NumInputTriangles = reader.ReadUInt32();
+                        var NumInputVertices = reader.ReadUInt32();
+                        var NumInputMeshes = reader.ReadUInt16();
+                        var NumInputTexCoords = reader.ReadUInt16();
+                        var ResourceFlags = reader.ReadUInt32();
+
+                        var RootClusterPage = reader.ReadInt32();
+                        m_IndexBuffer = reader.ReadUInt32Array(RootClusterPage / 4);
+
+                        var ImposterAtlas = reader.ReadInt32();
+                        for (int i = 0; i < ImposterAtlas; i++)
+                        {
+                            reader.ReadUInt16();
+                        }
+                        var HierarchyNodes = reader.ReadInt32();
+                        for (int i = 0; i < HierarchyNodes; i++)
+                        {
+                            new VGPackedHierarchyNode(reader);
+                        }
+                        var HierarchyRootOffsets = reader.ReadInt32();
+                        for (int i = 0; i < HierarchyRootOffsets; i++)
+                        {
+                            reader.ReadUInt32();
+                        }
+                        var PageStreamingStates = reader.ReadInt32();
+                        for (int i = 0; i < PageStreamingStates; i++)
+                        {
+                            new VGPageStreamingState(reader);
+                        }
+                        var PageDependencies = reader.ReadInt32();
+                        for (int i = 0; i < PageDependencies; i++)
+                        {
+                            reader.ReadUInt32();
+                        }
                     }
                 }
-                reader.AlignStream();
-
-                reader.ReadInt32();
+                if (version[0] >= 2022 && version[2] > 55) // 团结 >= 1.6.0 Base：Unity 2022.3.61f1
+                {
+                    reader.AlignStream();
+                }
+                else
+                {
+                    reader.AlignStream();
+                    reader.ReadInt32();
+                }
                 //Unity fixed it in 2017.3.1p1 and later versions
                 if ((version[0] > 2017 || (version[0] == 2017 && version[1] >= 4)) || //2017.4
                     ((version[0] == 2017 && version[1] == 3 && version[2] == 1) && buildType.IsPatch) || //fixed after 2017.3.1px
