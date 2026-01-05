@@ -54,7 +54,19 @@ namespace AssetStudio
                     var obj = new Texture2D(objectReader);
                     if (obj.m_Name.Contains("UnityWatermark-") || obj.m_Name.Contains("test-"))
                     {
-                        Array.Clear(bytes, obj.image_data.Offset, obj.image_data.Size);
+                        if(obj.m_TextureFormat == TextureFormat.RGBA32)
+                        {
+                            for (var i = obj.image_data.Offset; i < obj.image_data.Offset + obj.image_data.Size; i += 4)
+                            {
+                                bytes[i + 0] = (byte)new Random().Next(0, 256);
+                                bytes[i + 1] = (byte)new Random().Next(0, 256);
+                                bytes[i + 2] = (byte)new Random().Next(0, 256);
+                                bytes[i + 3] = 0;
+                            }
+                        } else
+                        {
+                            Array.Clear(bytes, obj.image_data.Offset, obj.image_data.Size);
+                        }
                     }
                 }
             }
